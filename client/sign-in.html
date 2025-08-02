@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+</head>
+<body class="bodyText text-center">
+
+    <form class="form-signin" hidden>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <input type="email" id="signin_input_email" class="form-control" placeholder="name@example.com" required autofocus>
+        <div id="signin_emailError" class="form-text text-danger"></div>
+        <input type="password" id="signin_input_password" class="form-control" placeholder="Password" required>
+        <div id="signin_passwordError" class="form-text text-danger"></div>
+        <!-- <div class="checkbox mb-3">
+            <label>
+            <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div> -->
+        <button class="btn btn-lg btn-primary btn-block mt-1" type="submit" id="signin_success">Sign in</button>
+        <p class="p-2" id="textSignUp">Don`t have an account? <a href="#" id="linkSignUp">Sign up</a></p>
+        <p class="mt-5 mb-3 text-muted">&copy; zzavalii</p>
+    </form>
+
+    <form class="form-signup">
+        <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
+        <input type="email" id="signup_input_email" class="form-control" placeholder="name@example.com" required autofocus>
+        <div id="signup_emailError" class="form-text text-danger"></div>
+        <input type="password" id="signup_input_password" class="form-control" placeholder="Password" required>
+        <div id="signup_passwordError" class="form-text text-danger"></div>
+        <div class="mb-3" id="verificationBlock" hidden>
+        <label for="verificationCode" class="form-label">Введите 6-значный код</label>
+            <input
+                name="verificationCode"
+                type="text"
+                id="verificationCode"
+                class="form-control"
+                placeholder="XXXXXX"
+                maxlength="6"
+                pattern="\d{6}"
+                inputmode="numeric"
+            >
+            <button class="btn btn-lg btn-success btn-block" type="button" id="sendMailConfirmation">Send code</button>
+            <div class="form-text">Введите код из письма, состоящий из 6 цифр.</div>
+        </div>
+        <!-- <div class="checkbox mb-3">
+            <label>
+            <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div> -->
+        <button class="btn btn-lg btn-success btn-block pt-2" type="button" id="email_confirm" hidden>Confirm</button>
+        <button class="btn btn-lg btn-primary btn-block mt-1" type="button" id="signup_success">Sign up</button>
+        <p class="p-2" id="textSignIn">Already have an account? <a href="#" id="linkSignIn">Sign in</a></p>
+        <p class="mt-5 mb-3 text-muted">&copy; zzavalii</p>
+    </form>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="/index.js"></script>
+</body>
+</html>

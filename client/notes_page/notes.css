@@ -1,0 +1,423 @@
+body{
+    height: 90vh;
+    transition: 0.8s;
+}
+
+.note_container{
+    display: flex;
+    flex-direction: row;
+    gap:2rem;
+    padding-top: 2rem;
+    padding-left: 3rem;
+    height: 100%;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.edit { 
+    cursor: pointer;
+    position: absolute;
+    width: 95%;
+    height: 30px;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding-left: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit:hover{
+    background-color: #d6d5d4;
+}
+
+.darktheme{
+    font-size: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* темная тема */
+.dark {
+    background-color: rgb(25, 25, 25);
+    transition: 0.8s;
+}
+.darkText{
+    color: white;
+    transition: 0.8s;
+}
+.dropdown-toggleDarkTheme::after {
+    border-top-color: white !important;
+    transition: 0.8s;
+}
+
+.userName,
+.userEmail{
+    font-weight: 600;
+}
+
+.profile_header{
+    display: none;
+    position: relative;
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    padding: 1rem;
+    background-color: rgb(244, 241, 241);
+    border-radius: 0.5rem;
+    box-shadow: 0px 1px 10px 0.1px #c2c0bf;
+    right: 60px;
+    top: 80px;
+    z-index: 2;
+}
+
+.note{
+    position: relative;
+    margin-top: 0.5rem;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+#btnDelete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: transparent;
+    border: 1px solid grey;
+    border-radius: 0.4rem;
+    color: #888;
+    font-size: 16px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+#btnDelete:hover {
+    background-color: rgba(245, 120, 120, 0.817);
+}
+
+.note_header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#add_note_notstarted,
+#add_note_inprogress,
+#add_note_done{
+    height: 2rem;
+    user-select: none; 
+    transition: background 20ms ease-in; 
+    cursor: pointer; 
+    display: inline-flex; 
+    align-items: center; 
+    height: 32px; 
+    padding-inline: 12px; 
+    border-radius: 0.5rem;
+    white-space: nowrap; 
+    font-size: 15px; 
+    flex-shrink: 0; 
+    line-height: 1.2; 
+    min-width: 0px; 
+    color: rgb(51, 126, 169); 
+    width: 100%; 
+    box-shadow: rgba(51, 126, 169, 0.1) 0px 0px 0px 1px; 
+    padding-left: 10px; 
+    padding-right: 10px; 
+    min-height: 40px;
+    margin-top: 0.5rem;
+    border: 1px blue;
+}
+
+/* ========== Не начатые заметки ========== */
+.note_notstarted{
+    background-color: rgba(215, 215, 215, 0.5);
+    width: 20rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+}
+.groundTitle_notStarted{
+    font-weight: 600;
+    width: 9rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: rgb(197, 194, 194, 0.5);
+}
+button#add_note_notstarted {
+    font-weight: 600;
+    color: #382b22;
+    padding: 0.5em 1em;
+    background: rgba(215, 215, 215, 0.5);
+    border: 1px #b18597;
+    border-radius: 0.75em;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+}
+button#add_note_notstarted:hover {
+    background: rgb(197, 194, 194);
+    transform: translate(0, 0.15em);
+}
+button#saveBtn_notStarted:hover {
+    background: rgb(197, 194, 194);
+    transform: translate(0, 0.15em);
+}
+
+
+/* ========== Заметки в процессе ========== */
+.note_inprogress {
+    background-color: rgb(138, 194, 239, 0.2);
+    width: 20rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+}
+.groundTitle_inProgress{
+    font-weight: 600;
+    width: 9rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: rgb(138, 194, 239, 0.3);
+}
+button#add_note_inprogress {
+    font-weight: 600;
+    color: #382b22;
+    padding: 0.5em 1em;
+    background: rgb(138, 194, 239, 0.1);
+    border: 1px #b18597;
+    border-radius: 0.75em;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+}
+button#add_note_inprogress:hover {
+    background: rgb(138, 194, 239);
+    transform: translate(0, 0.15em);
+}
+button#saveBtn_inProgress:hover {
+    background: rgb(138, 194, 239);
+    transform: translate(0, 0.15em);
+}
+
+/* ========== Заметки выполненные ========== */
+.note_done{
+    background-color: rgb(174, 235, 168, 0.2);
+    width: 20rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+}
+.groundTitle_Done{
+    font-weight: 600;
+    width: 7rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: rgb(174, 235, 168, 0.5);
+}
+button#add_note_done {
+    font-weight: 600;
+    color: #382b22;
+    padding: 0.5em 1em;
+    background: rgb(174, 235, 168, 0.2);
+    border: 1px #b18597;
+    border-radius: 0.75em;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+}
+button#add_note_done:hover {
+    background: rgb(174, 235, 168);
+    transform: translate(0, 0.15em);
+}
+button#saveBtn_Done:hover {
+    background: rgb(174, 235, 168);
+    transform: translate(0, 0.15em);
+}
+
+/* Общие контейнеры для 3 блоков */
+.note_wrapper_notStarted,
+.note_wrapper_InProgress,
+.note_wrapper_Done{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+/* Инпуты для ввода заметок */
+#new_note_inputTitle,
+#new_note_input{
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: 1px blue;
+    padding-left: 0.5rem;
+    outline: none;
+}
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+#inputsContainer_notStarted,
+#inputsContainer_InProgress,
+#inputsContainer_Done{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    border-radius: 0.5rem;
+}
+
+#saveBtn_inProgress,
+#saveBtn_notStarted,
+#saveBtn_Done{
+    height: 2rem;
+    user-select: none; 
+    transition: background 20ms ease-in; 
+    cursor: pointer; 
+    display: inline-flex; 
+    align-items: center; 
+    height: 32px; 
+    padding-inline: 12px; 
+    border-radius: 0.5rem;
+    white-space: nowrap; 
+    font-size: 15px; 
+    flex-shrink: 0; 
+    line-height: 1.2; 
+    min-width: 0px; 
+    color: rgb(51, 126, 169); 
+    width: 100%; 
+    box-shadow: rgba(51, 126, 169, 0.1) 0px 0px 0px 1px; 
+    padding-left: 10px; 
+    padding-right: 10px; 
+    min-height: 40px;
+    margin-top: 0.5rem;
+    border: 1px blue;
+}
+button#saveBtn_notStarted,
+button#saveBtn_inProgress,
+button#saveBtn_Done{
+    font-weight: 600;
+    color: #382b22;
+    padding: 0.5em 1em;
+    background: rgb(174, 235, 168, 0.2);
+    border: 1px #b18597;
+    border-radius: 0.75em;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+}
+
+.right_panel{
+    display: none;
+    width: 20rem;
+    background-color: aliceblue;
+}
+.note_panel{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#blueLine{
+    width: 100%;
+    height: 0.4rem;
+    background-color: rgb(131, 208, 255);
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.blur-overlay {
+    position: fixed;
+    top: 70px; 
+    left: 0;
+    width: 100%;
+    height: calc(100% - 70px);
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.2); 
+    z-index: 2;
+}
+
+.opened_note {
+    height: 80%;
+    width: 60%;
+    position: fixed;
+    top: 15%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 3;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    padding: 1rem;
+}
+
+/* скрытие по умолчанию */
+.hidden {
+    display: none;
+}
+
+.allContainerItems{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.addNotesItemBtn{
+    background-color: transparent;
+    border: none;
+}
+
+.itemBlock{
+    display: flex;
+    text-align: left;
+    width: 50%;
+    align-items: center;
+}
+
+
+#textItem{
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(165, 165, 173, 0.514);
+    height: 2.5rem;
+    padding-left: 0.5rem;
+}
+
+.textItem{
+    margin-left: 0.5rem;
+    font-size: 18px;
+    width: 90%;
+    overflow-wrap: break-word; 
+    white-space: normal; 
+}
+.checkItem{
+    width: 20px;
+    height: 20px;
+}
+
+.containerBlockItems{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
