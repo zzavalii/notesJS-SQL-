@@ -1,6 +1,14 @@
+*{
+    font-family: "Montserrat", sans-serif;
+}
 body{
     height: 90vh;
     transition: 0.8s;
+    background-color: #f2f5ec;
+}
+
+.HeaderBottomLine{
+    border-bottom: 1px solid grey !important;
 }
 
 .note_container{
@@ -31,25 +39,44 @@ body{
 }
 
 .edit:hover{
-    background-color: #d6d5d4;
+    background-color: #e7dfd8;
 }
 
 .darktheme{
-    font-size: 18px;
+    font-size: 14px;
     margin-right: 10px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* темная тема */
 .dark {
-    background-color: rgb(25, 25, 25);
+    /* background: #212122; */
+    background: #333333;
     transition: 0.8s;
 }
+
+.profile_header_Dark{
+    color: white;
+    background-color: rgb(168, 168, 173) !important;
+    box-shadow: 0px 1px 10px 0.1px #777779 !important;
+}
+
+.darkBlockThemeHeader{
+    background: rgba(148, 137, 100, 0.6) !important;
+    transition: 0.8s;
+}
+
+.darkBlockThemeHeader:hover{
+    background: rgba(196, 187, 159, 0.6) !important;
+    transition: 0.8s;
+}
+
 .darkText{
     color: white;
     transition: 0.8s;
 }
+
 .dropdown-toggleDarkTheme::after {
     border-top-color: white !important;
     transition: 0.8s;
@@ -103,6 +130,50 @@ body{
 
 #btnDelete:hover {
     background-color: rgba(245, 120, 120, 0.817);
+}
+
+#btnEdit {
+    position: absolute;
+    top: 8px;
+    right: 30px;
+    background-color: transparent;
+    border: 1px solid grey;
+    border-radius: 0.4rem;
+    color: #888;
+    font-size: 12px;
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+#btnEdit:hover {
+    background-color: rgba(205, 249, 72, 0.817);
+}
+
+#btnOpenItemWindow{
+    position: absolute;
+    top: 8px;
+    right: 30px;
+    background-color: transparent;
+    border: 1px solid grey;
+    border-radius: 0.4rem;
+    color: #888;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+#btnOpenItemWindow:hover {
+    background-color: rgba(70, 231, 218, 0.817);
 }
 
 .note_header{
@@ -174,7 +245,6 @@ button#saveBtn_notStarted:hover {
     background: rgb(197, 194, 194);
     transform: translate(0, 0.15em);
 }
-
 
 /* ========== Заметки в процессе ========== */
 .note_inprogress {
@@ -324,11 +394,47 @@ button#saveBtn_Done{
     transform-style: preserve-3d;
 }
 
-.right_panel{
-    display: none;
-    width: 20rem;
-    background-color: aliceblue;
+/* ====== Кнопка меню(бургер) ======*/
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); 
+    border-radius: 6px;
 }
+.navbar-toggler:hover {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); 
+    border-radius: 6px;
+}
+#burger-btn {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+    line-height: 1;
+    transition: 0.8s;
+}
+.dark_burger {
+    transition: 0.8s;
+    filter: invert(1);
+}
+.left_panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 350px;
+    height: 100%;
+    background-color: aliceblue;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1050; /* выше контента */
+}
+
+.left_panel.show {
+    transform: translateX(0);
+}
+
+.block {
+    padding: 1rem;
+}
+
 .note_panel{
     height: 100%;
     display: flex;
@@ -339,6 +445,14 @@ button#saveBtn_Done{
 #blueLine{
     width: 100%;
     height: 0.4rem;
+    background-color: rgb(131, 208, 255);
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+#blueLineItem{
+    width: 60%;
+    height: 0.2rem;
     background-color: rgb(131, 208, 255);
     border-radius: 0.5rem;
     margin-top: 0.5rem;
@@ -356,6 +470,7 @@ button#saveBtn_Done{
 }
 
 .opened_note {
+    overflow-y: auto;
     height: 80%;
     width: 60%;
     position: fixed;
@@ -382,17 +497,38 @@ button#saveBtn_Done{
 }
 
 .addNotesItemBtn{
+    margin-top: 1rem;
     background-color: transparent;
     border: none;
 }
-
-.itemBlock{
-    display: flex;
-    text-align: left;
-    width: 50%;
-    align-items: center;
+.addNotesItemBtn:hover{
+    background-color: rgba(161, 159, 159, 0.502);
 }
 
+.itemBlock{
+    height: 5rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+}
+
+.itemsContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal-input{
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(165, 165, 173, 0.514);
+    height: 2.5rem;
+    padding-left: 0.5rem;
+}
 
 #textItem{
     margin-top: 0.5rem;
@@ -418,6 +554,25 @@ button#saveBtn_Done{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 60%;
     height: auto;
+    /* background-color: red; */
+}
+
+#btnDeleteItem{
+    background-color: transparent;
+    border: 1px solid grey;
+    border-radius: 0.4rem;
+    color: #888;
+    font-size: 12px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+#btnDeleteItem:hover {
+    background-color: rgba(245, 120, 120, 0.817);
 }

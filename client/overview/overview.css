@@ -1,0 +1,127 @@
+*{
+    font-family: "Montserrat", sans-serif;
+}
+
+#headerButton{
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    background-color: antiquewhite;
+    border-radius: 0.5rem;
+}
+
+#headerButton:hover{
+    transition: 0.5s;
+    background-color: rgb(200, 190, 178);
+}
+
+.weather{
+    margin-right: 0.5rem;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+}
+    
+.bottomContainer{
+    display: none;
+    position: fixed;
+    top: 4rem;
+    right: 5%;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    width: 400px;
+    height: auto;
+    background-color: rgb(200, 190, 178);
+    box-shadow: 0px 1px 10px 0.1px #c2c0bf;
+    z-index: 1000;
+}
+
+.outputText{
+    margin-top: 1rem;
+}
+
+#applyCity {
+    font-weight: 600;
+    color: #382b22;
+    padding: 0.5em 1em;
+    background: rgb(105, 218, 131);
+    border: 1px #b18597;
+    border-radius: 0.5rem;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+}
+#applyCity:hover {
+    background: rgb(197, 194, 194);
+    transform: translate(0, 0.15em);
+}
+
+#cityName{
+    width: 60%;
+    height: 2.2rem;
+    border-radius: 0.5rem;
+    border: 1px blue;
+    padding-left: 0.5rem;
+    outline: none;
+}
+
+input#cityName:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+.noteOverviewContainer{
+    position: absolute;   
+    margin-top: 0.5rem;
+    width: 15rem;
+    background-color: rgb(255, 255, 255);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.overview_container {
+    position: relative; 
+    overflow: hidden;
+    min-height: 100%;  
+    width: 100%;
+}
+
+.noteOverviewContainer {
+    cursor: grab;
+    user-select: none;
+}
+
+button#addNoteOverview {
+    width: 10rem;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-weight: 600;
+    color: #382b22;
+    padding: 0.5em 1em;
+    background: rgba(215, 215, 215, 0.5);
+    border: 1px #b18597;
+    border-radius: 0.75em;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+}
+button#addNoteOverview:hover {
+    background: rgb(197, 194, 194);
+    transform: translate(0, 0.15em);
+}
+button#addNoteOverview:hover {
+    background: rgb(197, 194, 194);
+    transform: translate(0, 0.15em);
+}
+
+.noteWrapper{
+    position: fixed;
+    width: 20rem;
+    bottom: 90px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.contentElementOverview {
+    word-wrap: break-word; 
+}

@@ -4,6 +4,12 @@ const fs = require('fs');
 const path = require('path');
 const dbClient = require("./db");
 
+// const crypto = require('crypto');
+
+// const algorithm = 'aes-256-cbc';
+// const secretKey = crypto.createHash('sha256').update(process.env.ENCRYPTION_KEY || "defaultsecret").digest(); // 32 байта
+// const iv = Buffer.alloc(16, 0); 
+
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -31,6 +37,12 @@ app.get("/notes", (req, res) => {
     stream.pipe(res);
 }); 
 
+app.get("/overview", (req,res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    const stream = fs.createReadStream('./client/overview/overview.html');
+    stream.pipe(res);
+})
+
 app.get("/style.css", (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/css' });
     const stream = fs.createReadStream('./client/style.css');
@@ -42,6 +54,32 @@ app.get("/client/notes_page/notes.css", (req, res) => {
     const stream = fs.createReadStream('./client/notes_page/notes.css');
     stream.pipe(res);
 });
+
+app.get("/client/overview/overview.css", (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/css' });
+    const stream = fs.createReadStream('./client/overview/overview.css');
+    stream.pipe(res);
+});
+// function encrypt(text) {
+//     const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+//     let encrypted = cipher.update(text, 'utf8', 'base64');
+//     encrypted += cipher.final('base64');
+//     return encrypted;
+// }
+
+// function decrypt(encryptedText) {
+//     if (!encryptedText || typeof encryptedText !== 'string') return ''; // пустые или null -> пустая строка
+
+//     try {
+//         const decipher = crypto.createDecipheriv(algorithm, secretKey, iv);
+//         let decrypted = decipher.update(encryptedText, 'base64', 'utf8');
+//         decrypted += decipher.final('utf8');
+//         return decrypted;
+//     } catch (error) {
+//         console.error("Ошибка при дешифровке:", error);
+//         return ''; // при ошибке возвращаем пустую строку
+//     }
+// }
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
@@ -177,7 +215,7 @@ app.post("/authorization", async (req, res) => {
         const token = jwt.sign(
             { userId: user.users_id }, 
             process.env.JWT_SECRET, 
-            { expiresIn: "1h" } 
+            { expiresIn: "2h" } 
         );
         console.log("Generated token:", token);
         res.status(200).json({ message: "✅ Успешная авторизация", token });
@@ -188,9 +226,9 @@ app.post("/authorization", async (req, res) => {
     }
 });
 
-
 app.post("/newnote", authenticateToken, async (req, res) => {
-    const { title, content, status} = req.body;
+    const {title, content, status} = req.body;
+
     const user_id = req.user.userId;
 
     try {
@@ -237,7 +275,7 @@ app.post('/newitems', async (req, res) => {
 app.get('/usernoteitems', authenticateToken, async (req, res) => {
     try {
         const noteId = req.query.note_id; 
-        const query = 'SELECT * FROM NotesItem WHERE note_id = $1 ORDER BY created_at DESC';
+        const query = 'SELECT * FROM NotesItem WHERE note_id = $1 ORDER BY created_at';
         const result = await dbClient.query(query, [noteId]);
 
         res.json({ noteItems: result.rows });
@@ -254,11 +292,56 @@ app.get('/usernotes', authenticateToken, async (req, res) => {
         const result = await dbClient.query(query, [userId]);
 
         res.json({ notes: result.rows });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "❌ Ошибка сервера" });
     }
 });
+
+app.post('/notes/update/:id', authenticateToken, async(req, res) => {
+    try {
+        const userId = req.user.userId; 
+        const noteId = req.params.id;
+        const { title, content } = req.body;
+
+        const query = `
+        UPDATE Notes
+        SET title = $1, content = $2
+        WHERE id = $3 AND user_id = $4 RETURNING *
+        `
+
+        const result = await dbClient.query(query, [title, content,noteId, userId]);
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ message: "Заметка не найдена" });
+        }
+
+        res.json({ note: result.rows[0] });
+    } catch (err) {
+        console.error(err);
+    }
+})
+
+// app.get('/usernotes', authenticateToken, async (req, res) => {
+//     try {
+//         const userId = req.user.userId; 
+//         const query = 'SELECT * FROM Notes WHERE user_id = $1 ORDER BY created_at DESC';
+//         const result = await dbClient.query(query, [userId]);
+
+//         const decryptedNotes = result.rows.map(note => ({
+//             ...note,
+//             title: note.title ? decrypt(note.title) : '',
+//             content: note.content ? decrypt(note.content) : '',
+//             status: note.status || ''
+//         }));
+
+//         res.json({ notes: decryptedNotes });
+//     } catch (error) {
+//         console.error("Ошибка при получении заметок и дешифровке:", error);
+//         res.status(500).json({ message: "❌ Ошибка сервера" });
+//     }
+// });
 
 app.put('/notes/:id/status', authenticateToken, async(req,res) => {
     const noteId  = req.params.id;
@@ -292,6 +375,23 @@ app.post('/notes/delete/:id', authenticateToken, async (req, res) => {
         res.json({ deletedNote: result.rows[0] });
     } catch (err) {
         await dbClient.query('ROLLBACK');
+        console.error(err);
+        res.status(500).json({ message: "❌ Error deleting note and its items" });
+    }
+});
+
+app.post('/notesitem/delete/:item_id', authenticateToken, async (req, res) => {
+    const itemId = req.params.item_id;
+
+    try {
+        const result = await dbClient.query(`DELETE FROM NotesItem WHERE item_id = $1 RETURNING *`, [itemId]);
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ message: "Note not found" });
+        }
+
+        res.json({ deletedNote: result.rows[0] });
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: "❌ Error deleting note and its items" });
     }

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (isLoggedIn === "true") {
-        window.location.href = "/notes_page/notes.html";
+        window.location.href = "/notes";
     }
 
     function isEmailValid(value) {
